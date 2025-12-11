@@ -1,0 +1,42 @@
+@startuml
+
+class Cliente {
+    - nombre: String
+    - dni: String
+    - email: String
+    + getDni(): String
+    + equals(Object): boolean
+}
+
+class CuentaBancaria {
+    - iban: String
+    - saldo: double
+    - titular: Cliente
+    + getTitular(): Cliente
+    + operar()
+}
+
+class CuentaAhorro {
+    + calcularInteres(): double
+    + operar()
+}
+
+class CuentaNomina {
+    - empresa: String
+    + recibirNomina(cantidad: double)
+    + operar()
+}
+
+class Movimiento {
+    - fecha: Date
+    - cantidad: double
+    - concepto: String
+    + aplicar(cuenta: CuentaBancaria)
+}
+
+Cliente "1" *-- "1" CuentaBancaria : titular
+CuentaBancaria <|-- CuentaAhorro
+CuentaBancaria <|-- CuentaNomina
+CuentaBancaria "1" o-- "*" Movimiento
+
+@enduml

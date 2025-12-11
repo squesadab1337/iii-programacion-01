@@ -1,0 +1,49 @@
+@startuml
+
+class Cliente {
+    - nombre: String
+    - dni: String
+    - email: String
+    + getDni(): String
+    + equals(Object): boolean
+}
+
+class CuentaBancaria {
+    - iban: String
+    - saldo: double
+    - titular: Cliente
+    + getTitular(): Cliente
+    + depositar(cantidad: double)
+    + retirar(cantidad: double)
+    + operar()
+}
+
+class CuentaAhorro {
+    + calcularInteres(): double
+    + operar()
+}
+
+class CuentaNomina {
+    - empresa: String
+    + recibirNomina(cantidad: double)
+    + operar()
+}
+
+class SaldoInsuficienteException {
+    - mensaje: String
+    + SaldoInsuficienteException(mensaje: String)
+}
+
+class OperacionInvalidaException {
+    - mensaje: String
+    + OperacionInvalidaException(mensaje: String)
+}
+
+Cliente "1" *-- "1" CuentaBancaria : titular
+CuentaBancaria <|-- CuentaAhorro
+CuentaBancaria <|-- CuentaNomina
+
+CuentaBancaria ..> SaldoInsuficienteException : throws
+CuentaBancaria ..> OperacionInvalidaException : throws
+
+@enduml
